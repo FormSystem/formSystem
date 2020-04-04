@@ -1,5 +1,7 @@
 package com.edu.formSystem.model.domain;
 
+import java.io.Serializable;
+
 /**
  * @author zr
  * @program: formSystem
@@ -7,7 +9,9 @@ package com.edu.formSystem.model.domain;
  * @package: com.edu.formSystem
  * @description: 用户实体类
  */
-public class user {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 2588546154186227733L;
     /*用户id*/
     private String userId;
     /*用户名*/
@@ -17,9 +21,9 @@ public class user {
     /*用户邮箱*/
     private String userEmail;
     /*用户等级:0（超级管理员）1（注册用户） */
-    private String userPower;
+    private int userPower;
 
-    public user(String userId, String userName, String userPassword, String userEmail, String userPower) {
+    public User(String userId, String userName, String userPassword, String userEmail, int userPower) {
         this.userId = userId;
         this.userName = userName;
         this.userPassword = userPassword;
@@ -70,11 +74,11 @@ public class user {
         this.userEmail = userEmail;
     }
 
-    public String getUserPower() {
+    public int getUserPower() {
         return userPower;
     }
 
-    public void setUserPower(String userPower) {
+    public void setUserPower(int userPower) {
         this.userPower = userPower;
     }
 }

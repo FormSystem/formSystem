@@ -2,6 +2,8 @@ package com.edu.formSystem.model.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.io.Serializable;
+
 /**
  * @author zr
  * @program: formSystem
@@ -9,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  * @package: com.edu.formSystem
  * @description: 表单实体类
  */
-public class form {
+public class Form implements Serializable {
+
+    private static final long serialVersionUID = -7015230098794004782L;
     /*表单ID*/
     private String formId;
     /*表单名*/
@@ -24,7 +28,7 @@ public class form {
     /*表单数据量*/
     private int formNumber;
 
-    public form(String formId, String formName, String formStructure, String formUserId, String formTime, int formNumber) {
+    public Form(String formId, String formName, String formStructure, String formUserId, String formTime, int formNumber) {
         this.formId = formId;
         this.formName = formName;
         this.formStructure = formStructure;

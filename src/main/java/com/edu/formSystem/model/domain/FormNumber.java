@@ -1,5 +1,7 @@
 package com.edu.formSystem.model.domain;
 
+import java.io.Serializable;
+
 /**
  * @author zr
  * @program: formSystem
@@ -7,7 +9,9 @@ package com.edu.formSystem.model.domain;
  * @package: com.edu.formSystem
  * @description: 表单实体类
  */
-public class formNumber {
+public class FormNumber implements Serializable {
+
+    private static final long serialVersionUID = 3351060588164010283L;
     /*表单数据id（唯一）*/
     private String formNumberId;
     /*表单id*/
@@ -17,7 +21,7 @@ public class formNumber {
     /*填表人id（游客标null）*/
     private String userId;
 
-    public formNumber(String formNumberId, String formId, String formNumberContent, String userId) {
+    public FormNumber(String formNumberId, String formId, String formNumberContent, String userId) {
         this.formNumberId = formNumberId;
         this.formId = formId;
         this.formNumberContent = formNumberContent;
