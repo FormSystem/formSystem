@@ -41,12 +41,12 @@ public interface LoginRegisterDao {
     String assertLogin(@Param("name") String name, @Param("email") String email, @Param("password") String password);
 
     /**
-     * 系统验证账号是否已被使用
+     * 系统验证账号是否已被使用(也用来查找用户名对应ID)
      * @param userName
      * @return
      */
-    @Select("SELECT user_name FROM user WHERE user_name = #{userName}")
-    String isAccountUsed(String userName);
+    @Select("SELECT user_id FROM user WHERE user_name = #{userName}")
+    String isNameUsed(String userName);
 
     /**
      * 系统通过账号和旧密码验证账号
@@ -55,14 +55,14 @@ public interface LoginRegisterDao {
      * @param oldPassword
      * @return
      */
-    @Select("SELECT user_id FROM user WHERE user_id = #{userId} AND user_name = #{name} AND user_password=#{oldPassword}")
+    @Select("SELECT user_id, user_name, user_password, user_email, user_power FROM user WHERE user_id = #{userId} AND user_name = #{name} AND user_password=#{oldPassword}")
     @Results(
             id = "userVerify",
             value = {
                     @Result(id = true, property = "userId", column = "userId")
             }
     )
-    User assertOldPassword(@Param("userId") String userId, @Param("name") String name, @Param("oldPwd") String oldPassword);
+    User assertOldPassword(@Param("userId") String userId, @Param("name") String name, @Param("oldPassword") String oldPassword);
 
 
     /**

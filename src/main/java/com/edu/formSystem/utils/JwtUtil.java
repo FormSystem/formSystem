@@ -8,6 +8,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author zr
+ */
 public class JwtUtil {
     static final String SECRET = "ThisIsASecret";
 
@@ -22,7 +25,7 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
         //jwt前面一般都会加Bearer
-        return "Beita "+jwt;
+        return "formSystem "+jwt;
     }
 
     public static void validateToken(String token) {

@@ -3,6 +3,7 @@ package com.edu.formSystem.controller;
 import com.edu.formSystem.constant.ResponseConstant;
 import com.edu.formSystem.exception.LoginRegister.LoginErrorException;
 import com.edu.formSystem.exception.LoginRegister.OldPasswordWrongException;
+import com.edu.formSystem.model.domain.User;
 import com.edu.formSystem.service.LoginRegisterService;
 import com.edu.formSystem.utils.JwtUtil;
 import io.swagger.annotations.Api;
@@ -26,10 +27,9 @@ import java.util.Optional;
  * @package: com.edu.formSystem.controller
  * @description: 登陆/注册模块控制器
  **/
-@Api(value = "LoginRegisterController", description = "LoginRegisterController")
+@Api(value = "LoginRegisterController")
 @RestController
 public class LoginRegisterController {
-    // TODO: 2018/10/24 页面跳转
 
     @Autowired
     private LoginRegisterService loginRegisterService;
@@ -43,7 +43,7 @@ public class LoginRegisterController {
     @PostMapping("/user/register")
     public ResponseEntity<?> register(String name, String password, String email) {
         // 验证账号名是否已经被占用
-        Optional<String> user = loginRegisterService.isnameUsed(name);
+        Optional<String> user = loginRegisterService.isNameUsed(name);
         if (user.isPresent()) {
             return ResponseEntity.ok("用户名已存在！请重新输入！");
         }
@@ -61,7 +61,7 @@ public class LoginRegisterController {
     @GetMapping("/user/login")
     public ResponseEntity<?> assertLogin(String name, String email, String password) {
         //验证登陆信息
-        String id = assertLoginname(name, email, password);
+        String id = assertLoginName(name, email, password);
 
         String jwt = JwtUtil.generateToken(name);
 
@@ -84,7 +84,7 @@ public class LoginRegisterController {
     @GetMapping("/admin/login")
     public ResponseEntity<?> adminAssertLogin(String name, String email, String password) {
         //验证登陆信息
-        String id = assertLoginname(name, email, password);
+        String id = assertLoginName(name, email, password);
         //返回信息
         HashMap<String, Object> results = new HashMap<>();
         results.put("id", id);
@@ -96,19 +96,26 @@ public class LoginRegisterController {
 
     @ApiOperation(value = "用户修改密码", notes = "user change password")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户ID", dataType = "Integer", paramType = "query", required = true),
             @ApiImplicitParam(name = "name", value = "用户名", dataType = "string", paramType = "query", required = true),
             @ApiImplicitParam(name = "oldPwd", value = "旧密码", dataType = "string", paramType = "query", required = true),
             @ApiImplicitParam(name = "newPwd", value = "新密码", dataType = "string", paramType = "query", required = true)
     })
     @GetMapping("/user/password/change")
-    public ResponseEntity<?> changeUserPwd(@RequestParam("userId")String userId, @RequestParam("name") String name, @RequestParam("oldPwd") String oldPwd, @RequestParam("newPwd") String newPwd) {
-        // TODO: 2018/10/28 待测试
+    public ResponseEntity<?> changeUserPwd(@RequestParam("name") String name,@RequestParam("oldPwd") String oldPwd,
+                                           @RequestParam("newPwd") String newPwd) {
+        //查询name对应的ID
+        Optional<String> userId = loginRegisterService.isNameUsed(name);
+        if (!userId.isPresent()) {
+            return ResponseEntity.ok("用户名不存在！请重新输入！");
+        }
+
         //验证账号信息是否正确
-        assertOldPwd(userId, name, oldPwd);
+        assertOldPwd(userId.get(), name, oldPwd);
+
         //修改密码成功
-        loginRegisterService.changePassword(userId, newPwd);
-        return ResponseEntity.ok(ResponseConstant.CHANGE_PASSWORD_SUCCESS);
+        loginRegisterService.changePassword(userId.get(), newPwd);
+        return ResponseEntity.ok(
+                ResponseConstant.CHANGE_PASSWORD_SUCCESS);
     }
 
     /********************************** HELPER METHOD **********************************/
@@ -120,11 +127,11 @@ public class LoginRegisterController {
      * @param name
      * @param oldPwd
      */
-    private void assertOldPwd(String userId, String name, String oldPwd) {
-        loginRegisterService
+    private Optional<User> assertOldPwd(String userId, String name, String oldPwd) {
+        return Optional.ofNullable(loginRegisterService
                 .assertOldPassword(userId, name, oldPwd)
                 .orElseThrow(
-                        () -> new OldPasswordWrongException());
+                        () -> new OldPasswordWrongException()));
     }
 
     /**
@@ -134,7 +141,7 @@ public class LoginRegisterController {
      * @param email
      * @param password
      */
-    private String assertLoginname(String name, String email, String password) {
+    private String assertLoginName(String name, String email, String password) {
         return loginRegisterService
                 .assertLogin(name, email, password)
                 .orElseThrow(

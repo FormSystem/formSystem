@@ -23,6 +23,8 @@ public class User implements Serializable {
     /*用户等级:0（超级管理员）1（注册用户） */
     private int userPower;
 
+    public User(){}
+
     public User(String userId, String userName, String userPassword, String userEmail, int userPower) {
         this.userId = userId;
         this.userName = userName;

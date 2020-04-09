@@ -38,18 +38,18 @@ public interface LoginRegisterService {
      *
      * @param userId
      * @param name
-     * @param password
+     * @param oldPassword
      * @return Optional用于检查
      */
-    Optional<User> assertOldPassword(String userId, String name, String password);
+    Optional<User> assertOldPassword(String userId, String name, String oldPassword);
 
     /**
-     * 系统验证账号名是否已被使用
+     * 系统验证账号是否已被使用(也用来查找用户名对应ID)
      *
      * @param name
      * @return
      */
-    Optional<String> isnameUsed(String name);
+    Optional<String> isNameUsed(String name);
 
     /**
      * 用户通过邮箱验证账号
@@ -58,7 +58,7 @@ public interface LoginRegisterService {
      * @param email
      * @return
      */
-    Integer assertnameByEmail(String userId, String email);
+    Optional<String> assertNameByEmail(String userId, String email);
 
     /**
      * 修改用户的密码

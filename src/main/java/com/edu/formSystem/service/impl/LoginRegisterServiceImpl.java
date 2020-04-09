@@ -37,29 +37,32 @@ public class LoginRegisterServiceImpl implements LoginRegisterService {
      */
     @Override
     public Optional<String> assertLogin(String name, String email, String password) {
-        return Optional.empty();
+        return Optional.ofNullable(
+                loginRegisterDao.assertLogin(name,email,password));
     }
 
     /**
      * 系统通过账号和旧密码验证账号
      * @param userId
      * @param name
-     * @param password
+     * @param oldPassword
      * @return
      */
     @Override
-    public Optional<User> assertOldPassword(String userId, String name, String password) {
-        return Optional.empty();
+    public Optional<User> assertOldPassword(String userId, String name, String oldPassword) {
+        return Optional.ofNullable(
+                loginRegisterDao.assertOldPassword(userId,name,oldPassword));
     }
 
     /**
-     * 系统验证账号名是否已被使用
+     * 系统验证账号是否已被使用(也用来查找用户名对应ID)
      * @param name
      * @return
      */
     @Override
-    public Optional<String> isnameUsed(String name) {
-        return Optional.empty();
+    public Optional<String> isNameUsed(String name) {
+        return Optional.ofNullable(
+                loginRegisterDao.isNameUsed(name));
     }
 
     /**
@@ -69,8 +72,8 @@ public class LoginRegisterServiceImpl implements LoginRegisterService {
      * @return
      */
     @Override
-    public Integer assertnameByEmail(String userId, String email) {
-        return null;
+    public Optional<String> assertNameByEmail(String userId, String email) {
+        return Optional.empty();
     }
 
     /**
@@ -81,6 +84,7 @@ public class LoginRegisterServiceImpl implements LoginRegisterService {
      */
     @Override
     public boolean changePassword(String userId, String newPassword) {
+        if(loginRegisterDao.changePassword(userId,newPassword)!=null)  return true;
         return false;
     }
 }
