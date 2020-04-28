@@ -18,8 +18,6 @@ public class Form implements Serializable {
     private String formId;
     /*表单名*/
     private String formName;
-    /*表单结构*/
-    private String formStructure;
     /*表单创建者id（外键）*/
     private String formUserId;
     /*表单创建时间*/
@@ -27,14 +25,21 @@ public class Form implements Serializable {
     private String formTime;
     /*表单数据量*/
     private int formNumber;
+    /*表单宽度（默认值100）*/
+    private int formWidth;
+    /*表单字段对齐方式*/
+    private String formAlignment;
 
-    public Form(String formId, String formName, String formStructure, String formUserId, String formTime, int formNumber) {
+    public Form(){}
+
+    public Form(String formId, String formName, String formUserId, String formTime, int formNumber,int formWidth, String formAlignment) {
         this.formId = formId;
         this.formName = formName;
-        this.formStructure = formStructure;
         this.formUserId = formUserId;
         this.formTime = formTime;
         this.formNumber = formNumber;
+        this.formWidth = formWidth;
+        this.formAlignment = formAlignment;
     }
 
     @Override
@@ -42,7 +47,6 @@ public class Form implements Serializable {
         return "form{" +
                 "formId='" + formId + '\'' +
                 ", formName='" + formName + '\'' +
-                ", formStructure='" + formStructure + '\'' +
                 ", formUserId='" + formUserId + '\'' +
                 ", formTime='" + formTime + '\'' +
                 ", formNumber=" + formNumber +
@@ -63,14 +67,6 @@ public class Form implements Serializable {
 
     public void setFormName(String formName) {
         this.formName = formName;
-    }
-
-    public String getFormStructure() {
-        return formStructure;
-    }
-
-    public void setFormStructure(String formStructure) {
-        this.formStructure = formStructure;
     }
 
     public String getFormUserId() {
@@ -95,5 +91,21 @@ public class Form implements Serializable {
 
     public void setFormNumber(int formNumber) {
         this.formNumber = formNumber;
+    }
+
+    public int getFormWidth() {
+        return formWidth;
+    }
+
+    public void setFormWidth(int formWidth) {
+        this.formWidth = formWidth;
+    }
+
+    public String getFormAlignment() {
+        return formAlignment;
+    }
+
+    public void setFormAlignment(String formAlignment) {
+        this.formAlignment = formAlignment;
     }
 }

@@ -6,10 +6,12 @@ import com.edu.formSystem.service.LoginRegisterService;
 import com.edu.formSystem.utils.GetUidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class LoginRegisterServiceImpl implements LoginRegisterService {
 
     @Autowired
@@ -24,7 +26,7 @@ public class LoginRegisterServiceImpl implements LoginRegisterService {
      */
     @Override
     public Integer register(String name, String password, String email) {
-        String userId = GetUidUtils.getNewUserId();
+        String userId = GetUidUtils.getNewId();
         return loginRegisterDao.register(userId,name,password,email,1);
     }
 

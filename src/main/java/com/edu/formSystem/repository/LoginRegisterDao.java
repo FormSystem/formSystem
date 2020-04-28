@@ -46,7 +46,7 @@ public interface LoginRegisterDao {
      * @return
      */
     @Select("SELECT user_id FROM user WHERE user_name = #{userName}")
-    String isNameUsed(String userName);
+    String isNameUsed(@Param("userName") String userName);
 
     /**
      * 系统通过账号和旧密码验证账号

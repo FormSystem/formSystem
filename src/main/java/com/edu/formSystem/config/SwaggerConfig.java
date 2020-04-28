@@ -58,12 +58,6 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
      */
     private Predicate<String> doFilteringRules() {
         return or(
-                /*regex("/front.*"),
-                regex("/category.*"),
-                regex("/attribute.*"),
-                regex("/attributeValue.*"),
-                regex("/product.*"),
-                regex("/admin.*"),*/
                 regex("/user.*"),
                 regex("/user/Information.*"),
                 regex("/admin.*"),
@@ -71,7 +65,8 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
                 regex("/admin/exam.*"),
                 regex("/exam.*"),
                 regex("/admin/permission.*"),
-                regex("/admin/group.*")
+                regex("/admin/group.*"),
+                regex("/form.*")
 
         );
     }

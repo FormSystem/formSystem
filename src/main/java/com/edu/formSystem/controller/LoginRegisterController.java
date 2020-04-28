@@ -43,8 +43,8 @@ public class LoginRegisterController {
     @PostMapping("/user/register")
     public ResponseEntity<?> register(String name, String password, String email) {
         // 验证账号名是否已经被占用
-        Optional<String> user = loginRegisterService.isNameUsed(name);
-        if (user.isPresent()) {
+        Optional<String> userId = loginRegisterService.isNameUsed(name);
+        if (userId.isPresent()) {
             return ResponseEntity.ok("用户名已存在！请重新输入！");
         }
         //注册账号

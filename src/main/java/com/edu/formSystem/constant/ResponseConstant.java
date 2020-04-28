@@ -19,6 +19,13 @@ public class ResponseConstant {
     public static final String ASSERT_LOGIN_SUCCESS = "登陆成功！";
 
     /**
+     * FormManagementController 200
+     */
+    public static final String FORM_CREATE_SUCCESS = "注册表成功!";
+    public static final String FORM_UPDATE_SUCCESS = "修改表成功!";
+    public static final String FORM_DELETE_SUCCESS = "删除表成功!";
+
+    /**
      * loginRegisterController 400
      */
     public static final String NAME_ISUSED = "该用户名已被占用，请重新选择用户名！";

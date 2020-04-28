@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * @author zr
  * @program: formSystem
- * @Title: formNumber
+ * @Title: FormNumber
  * @package: com.edu.formSystem
  * @description: 表单实体类
  */

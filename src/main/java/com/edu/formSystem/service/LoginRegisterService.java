@@ -9,16 +9,16 @@ import java.util.Optional;
  * @program: formSystem
  * @Title: LoginRegisterController
  * @package: com.edu.formSystem.service
- * @description: 登陆/注册模块控制器
+ * @description: 登陆/注册模块接口
  **/
 
 public interface LoginRegisterService {
     /**
      * 用户注册账号
      *
-     * @param name
-     * @param password
-     * @param email
+     * @param name:用户名
+     * @param password：密码
+     * @param email：邮箱
      * @return
      */
     Integer register(String name, String password, String email);
@@ -26,9 +26,9 @@ public interface LoginRegisterService {
     /**
      * 用户通过账号登陆或者通过邮箱登陆
      *
-     * @param name
-     * @param email
-     * @param password
+     * @param name:用户名
+     * @param password：密码
+     * @param email：邮箱
      * @return
      */
     Optional<String> assertLogin(String name, String email, String password);
@@ -36,9 +36,9 @@ public interface LoginRegisterService {
     /**
      * 系统通过账号和旧密码验证账号
      *
-     * @param userId
-     * @param name
-     * @param oldPassword
+     * @param userId：用户ID
+     * @param name：用户名
+     * @param oldPassword：旧密码
      * @return Optional用于检查
      */
     Optional<User> assertOldPassword(String userId, String name, String oldPassword);
@@ -46,7 +46,7 @@ public interface LoginRegisterService {
     /**
      * 系统验证账号是否已被使用(也用来查找用户名对应ID)
      *
-     * @param name
+     * @param name：用户名
      * @return
      */
     Optional<String> isNameUsed(String name);
@@ -54,8 +54,8 @@ public interface LoginRegisterService {
     /**
      * 用户通过邮箱验证账号
      *
-     * @param userId
-     * @param email
+     * @param userId：用户ID
+     * @param email：用户邮箱
      * @return
      */
     Optional<String> assertNameByEmail(String userId, String email);
@@ -63,8 +63,8 @@ public interface LoginRegisterService {
     /**
      * 修改用户的密码
      *
-     * @param userId
-     * @param newPassword
+     * @param userId：用户ID
+     * @param newPassword：旧密码
      * @return
      */
     boolean changePassword(String userId, String newPassword);
