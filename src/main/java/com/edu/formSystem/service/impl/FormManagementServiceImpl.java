@@ -1,6 +1,7 @@
 package com.edu.formSystem.service.impl;
 
 import com.edu.formSystem.model.domain.Form;
+import com.edu.formSystem.model.domain.FormStructure;
 import com.edu.formSystem.repository.FormManagementDao;
 import com.edu.formSystem.service.FormManagementService;
 import com.edu.formSystem.utils.GetUidUtils;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,5 +61,41 @@ public class FormManagementServiceImpl implements FormManagementService {
     public Optional<Form> findForm(String formId) {
         return Optional.ofNullable(
                 formManagementDao.findForm(formId));
+    }
+
+    @Override
+    public Optional<Integer> createFormStructure(String formId, int formFieldId, String formFieldName, String fieldAttributesValue, int formFieldOrder) {
+        String formStructureId = GetUidUtils.getNewId();
+        return Optional.ofNullable(
+                formManagementDao.createFormStructure(
+                        formStructureId,formId,formFieldId,formFieldName,fieldAttributesValue,formFieldOrder));
+    }
+
+    @Override
+    public Optional<List<FormStructure>> findFormStructureByFormId(String formId) {
+        List<FormStructure> formStructure = formManagementDao.findFormStructureByFormId(formId);
+        formStructure.forEach(formStructure1 -> {
+            formStructure1.setFormFieldAttributesName(formManagementDao.findFormFieldAttributesByFormFieldId(formStructure1.getFormFieldId()));
+        });
+        return Optional.of(formStructure);
+    }
+
+    @Override
+    public Optional<Integer> changeFormStructure(String formStructureId, String formId, int formFieldId, String formFieldName, String fieldAttributesValue, int formFieldOrder) {
+        return Optional.ofNullable(
+                formManagementDao.changeFormStructure(
+                        formStructureId,formId,formFieldId,formFieldName,fieldAttributesValue,formFieldOrder));
+    }
+
+    @Override
+    public Optional<Integer> deleteFromStructureByFromStructureId(String formStructureId) {
+        return Optional.ofNullable(
+                formManagementDao.deleteFromStructureByFromStructureId(formStructureId));
+    }
+
+    @Override
+    public Optional<List<String>> findFormFieldAttributesByFormFieldId(int formFieldId) {
+        return Optional.ofNullable(
+                formManagementDao.findFormFieldAttributesByFormFieldId(formFieldId));
     }
 }

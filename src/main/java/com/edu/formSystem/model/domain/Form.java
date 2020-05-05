@@ -3,6 +3,7 @@ package com.edu.formSystem.model.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author zr
@@ -29,10 +30,12 @@ public class Form implements Serializable {
     private int formWidth;
     /*表单字段对齐方式*/
     private String formAlignment;
+    /*表单结构链表*/
+    private List<FormStructure> formStructureList;
 
     public Form(){}
 
-    public Form(String formId, String formName, String formUserId, String formTime, int formNumber,int formWidth, String formAlignment) {
+    public Form(String formId, String formName, String formUserId, String formTime, int formNumber, int formWidth, String formAlignment, List<FormStructure> formStructureList) {
         this.formId = formId;
         this.formName = formName;
         this.formUserId = formUserId;
@@ -40,16 +43,20 @@ public class Form implements Serializable {
         this.formNumber = formNumber;
         this.formWidth = formWidth;
         this.formAlignment = formAlignment;
+        this.formStructureList = formStructureList;
     }
 
     @Override
     public String toString() {
-        return "form{" +
+        return "Form{" +
                 "formId='" + formId + '\'' +
                 ", formName='" + formName + '\'' +
                 ", formUserId='" + formUserId + '\'' +
                 ", formTime='" + formTime + '\'' +
                 ", formNumber=" + formNumber +
+                ", formWidth=" + formWidth +
+                ", formAlignment='" + formAlignment + '\'' +
+                ", formStructureList=" + formStructureList +
                 '}';
     }
 
@@ -107,5 +114,17 @@ public class Form implements Serializable {
 
     public void setFormAlignment(String formAlignment) {
         this.formAlignment = formAlignment;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public List<FormStructure> getFormStructureList() {
+        return formStructureList;
+    }
+
+    public void setFormStructureList(List<FormStructure> formStructureList) {
+        this.formStructureList = formStructureList;
     }
 }

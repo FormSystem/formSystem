@@ -18,6 +18,6 @@ public class NameIsUsedException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return ResponseConstant.NAME_ISUSED;
+        return ResponseConstant.NAME_IS_USED;
     }
 }

@@ -89,10 +89,73 @@ public class FormManagementController {
 
     return ResponseEntity.ok(ResponseConstant.FORM_DELETE_SUCCESS);
     }
-    
+
+
     @ApiOperation(value = "管理员查询表单", notes = "delete Form")
     @PostMapping("/form/findAll")
     public ResponseEntity<?> findAllForm() {
         return ResponseEntity.ok(formManagementService.findAllForm());
+    }
+
+
+    @ApiOperation(value = "管理员添加表单结构", notes = "form structure add")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "formId", value = "表单ID", dataType = "string", paramType = "query", required = true),
+            @ApiImplicitParam(name = "formFieldId", value = "表单字段ID", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "formFieldName", value = "表单字段名", dataType = "string", paramType = "query", required = true),
+            @ApiImplicitParam(name = "fieldAttributesValue", value = "表单属性值", dataType = "string", paramType = "query", required = true),
+            @ApiImplicitParam(name = "formFieldOrder", value = "表单排序", dataType = "int", paramType = "query", required = true)
+    })
+    @PostMapping("/form/structure/add")
+    public ResponseEntity<?> createFormStructure(String formId, int formFieldId, String formFieldName, String fieldAttributesValue, int formFieldOrder) {
+        formManagementService.createFormStructure(formId,formFieldId,formFieldName,fieldAttributesValue,formFieldOrder);
+        return ResponseEntity.ok(ResponseConstant.FORM_STRUCTURE_CREATE_SUCCESS);
+    }
+
+
+    @ApiOperation(value = "管理员修改表单结构", notes = "form structure update")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "formStructureId", value = "表单结构ID", dataType = "string", paramType = "query", required = true),
+            @ApiImplicitParam(name = "formId", value = "表单ID", dataType = "string", paramType = "query", required = true),
+            @ApiImplicitParam(name = "formFieldId", value = "表单字段ID", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "formFieldName", value = "表单字段名", dataType = "string", paramType = "query", required = true),
+            @ApiImplicitParam(name = "fieldAttributesValue", value = "表单属性值", dataType = "string", paramType = "query", required = true),
+            @ApiImplicitParam(name = "formFieldOrder", value = "表单排序", dataType = "int", paramType = "query", required = true)
+    })
+    @PostMapping("/form/structure/update")
+    public ResponseEntity<?> updateFormStructure(String formStructureId,String formId,int formFieldId,String formFieldName,String fieldAttributesValue,int formFieldOrder) {
+        if (formManagementService.changeFormStructure(
+                formStructureId,formId,formFieldId,formFieldName,fieldAttributesValue,formFieldOrder).orElse(0)==0){
+            return ResponseEntity.ok(ResponseConstant.FORM_STRUCTURE_UPDATE_FAILURE);
+        }
+        return ResponseEntity.ok(ResponseConstant.FORM_STRUCTURE_UPDATE_SUCCESS);
+    }
+
+    @ApiOperation(value = "管理员删除表单结构", notes = "form structure delete")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "formStructureId", value = "表单结构ID", dataType = "string", paramType = "query", required = true),
+    })
+    @PostMapping("/form/structure/delete")
+    public ResponseEntity<?> deleteFormStructure(String formStructureId) {
+        if(formManagementService.deleteFromStructureByFromStructureId(formStructureId).orElse(0)==0){
+            return ResponseEntity.ok(ResponseConstant.FORM_STRUCTURE_DELETE_FAILURE);
+        }
+        return ResponseEntity.ok(ResponseConstant.FORM_STRUCTURE_DELETE_SUCCESS);
+    }
+
+    @ApiOperation(value = "查看表单信息", notes = "form structure delete")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "formId", value = "表单ID", dataType = "string", paramType = "query", required = true),
+    })
+    @PostMapping("/form/information")
+    public ResponseEntity<?> findFormByFormId(String formId) {
+        Form formNull = new Form();
+        Form form = formManagementService.findForm(formId).orElse(formNull);
+        if(form.getFormId()==null|| form.getFormId().equals("")){
+            return ResponseEntity.ok(ResponseConstant.FORM_FIND_FAILURE);
+        }
+        form.setFormStructureList(formManagementService.findFormStructureByFormId(formId).orElse(null));
+
+        return ResponseEntity.ok(form);
     }
 }

@@ -24,25 +24,21 @@ public class ResponseConstant {
     public static final String FORM_CREATE_SUCCESS = "注册表成功!";
     public static final String FORM_UPDATE_SUCCESS = "修改表成功!";
     public static final String FORM_DELETE_SUCCESS = "删除表成功!";
+    public static final String FORM_STRUCTURE_CREATE_SUCCESS = "添加表结构成功！";
+    public static final String FORM_STRUCTURE_CREATE_FAILURE = "添加表结构失败！请重新添加！";
+    public static final String FORM_STRUCTURE_UPDATE_SUCCESS = "更新表结构成功！";
+    public static final String FORM_STRUCTURE_UPDATE_FAILURE = "更新表结构失败！请重新添加！";
+    public static final String FORM_STRUCTURE_DELETE_SUCCESS = "删除表结构成功！";
+    public static final String FORM_STRUCTURE_DELETE_FAILURE = "删除表结构失败！请确认表单结构ID！";
+    public static final String FORM_FIND_FAILURE = "不存在这个表！";
 
     /**
      * loginRegisterController 400
      */
-    public static final String NAME_ISUSED = "该用户名已被占用，请重新选择用户名！";
+    public static final String NAME_IS_USED = "该用户名已被占用，请重新选择用户名！";
     public static final String OLD_PASSWORD_WRONG = "验证失败！请重新输入！";
     public static final String ACCOUNT_OR_PWD_WRONG = "登陆失败！请重试！";
 
-    /**
-     * PersonalInformationController 200
-     */
-    public static final String CHANGE_USERDETAILS_SUCCESS = "修改信息成功";
-
-    /**
-     * ExamManagementController 400
-     */
-    public static final String EXAM_SIGNUP_CANNOT_CHANGE = "考试已经关闭！修改失败！";
-    public static final String EXAM_QUERY_CANNOT_CHANGE = "考试已经关闭或报名未截止！修改失败！";
-    public static final String EXAM_DOES_NOT_EXIST = "考试不存在或出现错误！请稍后重试！";
 
     /**
      * 公有构造函数

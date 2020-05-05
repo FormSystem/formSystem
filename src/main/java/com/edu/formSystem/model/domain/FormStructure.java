@@ -1,6 +1,7 @@
 package com.edu.formSystem.model.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author zr
@@ -19,32 +20,36 @@ public class FormStructure implements Serializable {
     /*表单字段id（唯一）*/
     private int formFieldId;
     /*表单字段名*/
-    private String form_field_name;
+    private String formFieldName;
     /*表单字段属性值*/
     private String fieldAttributesValue;
     /*表单字段顺序*/
     private String formFieldOrder;
+    /*表单字段属性值*/
+    private List<String> formFieldAttributesName;
 
     public FormStructure(){}
 
-    public FormStructure(String formStructureId, String formId, int formFieldId, String form_field_name, String fieldAttributesValue, String formFieldOrder) {
+    public FormStructure(String formStructureId, String formId, int formFieldId, String formFieldName, String fieldAttributesValue, String formFieldOrder, List<String> formFieldAttributesName) {
         this.formStructureId = formStructureId;
         this.formId = formId;
         this.formFieldId = formFieldId;
-        this.form_field_name = form_field_name;
+        this.formFieldName = formFieldName;
         this.fieldAttributesValue = fieldAttributesValue;
         this.formFieldOrder = formFieldOrder;
+        this.formFieldAttributesName = formFieldAttributesName;
     }
 
     @Override
     public String toString() {
-        return "formStructure{" +
+        return "FormStructure{" +
                 "formStructureId='" + formStructureId + '\'' +
                 ", formId='" + formId + '\'' +
                 ", formFieldId=" + formFieldId +
-                ", form_field_name='" + form_field_name + '\'' +
+                ", formFieldName='" + formFieldName + '\'' +
                 ", fieldAttributesValue='" + fieldAttributesValue + '\'' +
                 ", formFieldOrder='" + formFieldOrder + '\'' +
+                ", formFieldAttributesName=" + formFieldAttributesName +
                 '}';
     }
 
@@ -76,12 +81,22 @@ public class FormStructure implements Serializable {
         this.formFieldId = formFieldId;
     }
 
-    public String getForm_field_name() {
-        return form_field_name;
+
+
+    public List<String> getFormFieldAttributesName() {
+        return formFieldAttributesName;
     }
 
-    public void setForm_field_name(String form_field_name) {
-        this.form_field_name = form_field_name;
+    public void setFormFieldAttributesName(List<String> formFieldAttributesName) {
+        this.formFieldAttributesName = formFieldAttributesName;
+    }
+
+    public String getFormFieldName() {
+        return formFieldName;
+    }
+
+    public void setFormFieldName(String formFieldName) {
+        this.formFieldName = formFieldName;
     }
 
     public String getFieldAttributesValue() {
@@ -99,4 +114,6 @@ public class FormStructure implements Serializable {
     public void setFormFieldOrder(String formFieldOrder) {
         this.formFieldOrder = formFieldOrder;
     }
+
+
 }

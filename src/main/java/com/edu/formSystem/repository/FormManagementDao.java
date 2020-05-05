@@ -1,6 +1,7 @@
 package com.edu.formSystem.repository;
 
 import com.edu.formSystem.model.domain.Form;
+import com.edu.formSystem.model.domain.FormStructure;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -92,4 +93,66 @@ public interface FormManagementDao {
     @Select("SELECT form_id, form_name,form_user_id,form_time,form_number,form_width,form_alignment" +
             " FROM form WHERE form_id = #{formId}")
     Form findForm(@Param("formId")String formId);
+
+
+    /**
+     * 创建表单结构
+     * @param formStructureId:表单结构ID
+     * @param formId:表单ID
+     * @param formFieldId:表单字段ID
+     * @param formFieldName:表单字段名
+     * @param fieldAttributesValue:表单字段属性值
+     * @param formFieldOrder:表单字段顺序
+     * @return Integer
+     */
+    @Insert("INSERT INTO form_structure (form_structure_id, form_id,form_field_id,form_field_name,field_attributes_value,form_field_order) " +
+            "VALUES (#{formStructureId},#{formId},#{formFieldId},#{formFieldName},#{fieldAttributesValue},#{formFieldOrder})")
+    Integer createFormStructure(@Param("formStructureId")String formStructureId, @Param("formId") String formId, @Param("formFieldId") int formFieldId,
+                                @Param("formFieldName") String formFieldName,@Param("fieldAttributesValue") String fieldAttributesValue,@Param("formFieldOrder") int formFieldOrder);
+
+
+    /**
+     * 查找表单结构
+     * @param formId:表单ID
+     * @return List<FormStructure>
+     */
+    @Select("SELECT fs.form_structure_id, fs.form_id,fs.form_field_id,fs.form_field_name,fs.field_attributes_value," +
+            "fs.form_field_order,ff.form_field_type " +
+            "FROM form_structure fs " +
+            "LEFT JOIN form_field ff on fs.form_field_id = ff.form_field_id WHERE form_id = #{formId}")
+    List<FormStructure> findFormStructureByFormId(@Param("formId")String formId);
+
+    /**
+     * 更改表单结构
+     * @param formStructureId:表单结构ID
+     * @param formId:表单ID
+     * @param formFieldId:表单字段ID
+     * @param formFieldName:表单字段名
+     * @param fieldAttributesValue:表单字段属性值
+     * @param formFieldOrder:表单字段顺序
+     * @return Integer
+     */
+    @Update("UPDATE form_structure SET form_structure_id = #{formStructureId}, form_id = #{formId} , form_field_id = #{formFieldId} ,form_field_name = #{formFieldName}," +
+            " field_attributes_value = #{fieldAttributesValue}, form_field_order = #{formFieldOrder} WHERE form_structure_id=#{formStructureId}")
+    Integer changeFormStructure(@Param("formStructureId")String formStructureId, @Param("formId") String formId, @Param("formFieldId") int formFieldId,
+                                @Param("formFieldName") String formFieldName,@Param("fieldAttributesValue") String fieldAttributesValue,@Param("formFieldOrder") int formFieldOrder);
+
+    /**
+     * 删除表单
+     * @param formStructureId:表单字段ID
+     * @return Integer
+     */
+    @Delete("DELETE FROM form_structure WHERE form_structure_id = #{formStructureId}")
+    Integer deleteFromStructureByFromStructureId(@Param("formStructureId")String formStructureId);
+
+    /**
+     * 查找表单字段属性值
+     * @param formFieldId:表单字段ID
+     * @return List<FormStructure>
+     */
+    @Select("select ffa.form_field_attributes_name " +
+            "from rel_fi_at rfa LEFT JOIN form_field_attributes ffa ON ffa.form_field_attributes_id = rfa.form_field_attributes_id " +
+            "WHERE form_field_id = #{formFieldId}")
+    List<String> findFormFieldAttributesByFormFieldId(@Param("formFieldId")int formFieldId);
+
 }

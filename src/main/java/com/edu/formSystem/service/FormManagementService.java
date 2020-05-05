@@ -1,6 +1,8 @@
 package com.edu.formSystem.service;
 
 import com.edu.formSystem.model.domain.Form;
+import com.edu.formSystem.model.domain.FormStructure;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -71,5 +73,53 @@ public interface FormManagementService {
      * @return Optional<Form>
      */
     Optional<Form> findForm(String formId);
+
+    /**
+     * 创建表单结构
+     * @param formStructureId:表单结构ID
+     * @param formId:表单ID
+     * @param formFieldId:表单字段ID
+     * @param formFieldName:表单字段名
+     * @param fieldAttributesValue:表单字段属性值
+     * @param formFieldOrder:表单字段顺序
+     * @return Integer
+     */
+    Optional<Integer> createFormStructure(String formId, int formFieldId,String formFieldName,
+                                String fieldAttributesValue, int formFieldOrder);
+
+    /**
+     * 查找表单结构
+     * @param formId:表单ID
+     * @return Form
+     */
+    Optional<List<FormStructure>> findFormStructureByFormId(String formId);
+
+    /**
+     * 更改表单结构
+     * @param formStructureId:表单结构ID
+     * @param formId:表单ID
+     * @param formFieldId:表单字段ID
+     * @param formFieldName:表单字段名
+     * @param fieldAttributesValue:表单字段属性值
+     * @param formFieldOrder:表单字段顺序
+     * @return Integer
+     */
+    Optional<Integer> changeFormStructure(String formStructureId, String formId, int formFieldId,String formFieldName,
+                                String fieldAttributesValue, int formFieldOrder);
+
+    /**
+     * 删除表单
+     * @param formStructureId:表单字段ID
+     * @return Integer
+     */
+    Optional<Integer> deleteFromStructureByFromStructureId(String formStructureId);
+
+
+    /**
+     * 查找表单字段属性值
+     * @param formFieldId 表单字段id
+     * @return
+     */
+    Optional<List<String>> findFormFieldAttributesByFormFieldId(int formFieldId);
 
 }
