@@ -78,8 +78,8 @@ public class LoginRegisterController {
     @ApiOperation(value = "管理员登陆验证", notes = "admin login")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", value = "用户名", dataType = "string", paramType = "query"),
-            @ApiImplicitParam(name = "password", value = "密码", dataType = "string", paramType = "query", required = true),
-            @ApiImplicitParam(name = "email", value = "邮箱", dataType = "string", paramType = "query")
+            @ApiImplicitParam(name = "email", value = "邮箱", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "password", value = "密码", dataType = "string", paramType = "query", required = true)
     })
     @GetMapping("/admin/login")
     public ResponseEntity<?> adminAssertLogin(String name, String email, String password) {
@@ -131,12 +131,11 @@ public class LoginRegisterController {
         return Optional.ofNullable(loginRegisterService
                 .assertOldPassword(userId, name, oldPwd)
                 .orElseThrow(
-                        () -> new OldPasswordWrongException()));
+                        OldPasswordWrongException::new));
     }
 
     /**
      * 验证登陆信息
-     *
      * @param name
      * @param email
      * @param password
@@ -145,7 +144,7 @@ public class LoginRegisterController {
         return loginRegisterService
                 .assertLogin(name, email, password)
                 .orElseThrow(
-                        () -> new LoginErrorException());
+                        LoginErrorException::new);
     }
 
 }

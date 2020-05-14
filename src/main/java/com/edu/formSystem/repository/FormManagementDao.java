@@ -57,8 +57,16 @@ public interface FormManagementDao {
      * @param formId:表单ID
      * @return
      */
-    @Update("UPDATE form SET  form_number = form_number +1 WHERE form_id=#{formId]")
+    @Update("UPDATE form SET  form_number = form_number +1 WHERE form_id=#{formId}")
     Integer addFormNumber(@Param("formId")String formId);
+
+    /**
+     * 删除表单数据数
+     * @param formId:表单ID
+     * @return
+     */
+    @Update("UPDATE form SET  form_number = form_number -1 WHERE form_id=#{formId}")
+    Integer deleteFormNumber(@Param("formId")String formId);
 
     /**
      * 系统验证表单名是否已被使用(也用来查找表单对应ID)

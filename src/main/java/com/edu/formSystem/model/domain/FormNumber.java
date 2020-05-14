@@ -21,6 +21,8 @@ public class FormNumber implements Serializable {
     /*填表人id（游客标null）*/
     private String userId;
 
+    public FormNumber(){}
+
     public FormNumber(String formNumberId, String formId, String formNumberContent, String userId) {
         this.formNumberId = formNumberId;
         this.formId = formId;

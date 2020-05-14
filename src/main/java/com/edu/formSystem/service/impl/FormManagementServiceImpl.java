@@ -40,6 +40,12 @@ public class FormManagementServiceImpl implements FormManagementService {
     }
 
     @Override
+    public Optional<Integer> deleteFormNumber(String formId) {
+        return Optional.ofNullable(
+                formManagementDao.deleteFormNumber(formId));
+    }
+
+    @Override
     public Optional<Form> isFormNameUsed(String formName) {
         return Optional.ofNullable(
                 formManagementDao.isFormNameUsed(formName));

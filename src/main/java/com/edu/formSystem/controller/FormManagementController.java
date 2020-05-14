@@ -10,8 +10,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -63,7 +62,7 @@ public class FormManagementController {
             @ApiImplicitParam(name = "formWidth", value = "表单宽度", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "formAlignment", value = "表单排列方式", dataType = "string", paramType = "query")
     })
-    @PostMapping("/form/update")
+    @PutMapping("/form/update")
     public ResponseEntity<?> updateForm(String formId, String formName, String formUserId, String formTime, int formNumber, int formWidth, String formAlignment) {
         // 验证表单是否存在
         Optional<Form> form = formManagementService.isFormNameUsed(formName);
@@ -78,7 +77,7 @@ public class FormManagementController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "formId", value = "表单id", dataType = "string", paramType = "query", required = true)
     })
-    @PostMapping("/form/delete")
+    @DeleteMapping("/form/delete")
     public ResponseEntity<?> deleteForm(String formId) {
         // 验证表单是否存在
         Optional<Form> form = formManagementService.findForm(formId);
@@ -91,8 +90,8 @@ public class FormManagementController {
     }
 
 
-    @ApiOperation(value = "管理员查询表单", notes = "delete Form")
-    @PostMapping("/form/findAll")
+    @ApiOperation(value = "管理员查询表单", notes = "Select All Form")
+    @GetMapping("/form/findAll")
     public ResponseEntity<?> findAllForm() {
         return ResponseEntity.ok(formManagementService.findAllForm());
     }
@@ -106,7 +105,7 @@ public class FormManagementController {
             @ApiImplicitParam(name = "fieldAttributesValue", value = "表单属性值", dataType = "string", paramType = "query", required = true),
             @ApiImplicitParam(name = "formFieldOrder", value = "表单排序", dataType = "int", paramType = "query", required = true)
     })
-    @PostMapping("/form/structure/add")
+    @GetMapping("/form/structure/add")
     public ResponseEntity<?> createFormStructure(String formId, int formFieldId, String formFieldName, String fieldAttributesValue, int formFieldOrder) {
         formManagementService.createFormStructure(formId,formFieldId,formFieldName,fieldAttributesValue,formFieldOrder);
         return ResponseEntity.ok(ResponseConstant.FORM_STRUCTURE_CREATE_SUCCESS);
@@ -122,7 +121,7 @@ public class FormManagementController {
             @ApiImplicitParam(name = "fieldAttributesValue", value = "表单属性值", dataType = "string", paramType = "query", required = true),
             @ApiImplicitParam(name = "formFieldOrder", value = "表单排序", dataType = "int", paramType = "query", required = true)
     })
-    @PostMapping("/form/structure/update")
+    @PutMapping("/form/structure/update")
     public ResponseEntity<?> updateFormStructure(String formStructureId,String formId,int formFieldId,String formFieldName,String fieldAttributesValue,int formFieldOrder) {
         if (formManagementService.changeFormStructure(
                 formStructureId,formId,formFieldId,formFieldName,fieldAttributesValue,formFieldOrder).orElse(0)==0){
@@ -135,7 +134,7 @@ public class FormManagementController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "formStructureId", value = "表单结构ID", dataType = "string", paramType = "query", required = true),
     })
-    @PostMapping("/form/structure/delete")
+    @DeleteMapping("/form/structure/delete")
     public ResponseEntity<?> deleteFormStructure(String formStructureId) {
         if(formManagementService.deleteFromStructureByFromStructureId(formStructureId).orElse(0)==0){
             return ResponseEntity.ok(ResponseConstant.FORM_STRUCTURE_DELETE_FAILURE);
@@ -157,5 +156,14 @@ public class FormManagementController {
         form.setFormStructureList(formManagementService.findFormStructureByFormId(formId).orElse(null));
 
         return ResponseEntity.ok(form);
+    }
+
+    @ApiOperation(value = "查看字段对应的属性", notes = "find form field")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "formFieldId", value = "表单字段ID", dataType = "int", paramType = "query", required = true),
+    })
+    @PostMapping("/form/field/information")
+    public ResponseEntity<?> findFormFieldAttributesByFormFieldId(int formFieldId) {
+        return ResponseEntity.ok(formManagementService.findFormFieldAttributesByFormFieldId(formFieldId));
     }
 }

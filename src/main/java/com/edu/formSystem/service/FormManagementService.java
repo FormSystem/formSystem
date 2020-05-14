@@ -48,6 +48,13 @@ public interface FormManagementService {
     Optional<Integer> addFormNumber(String formId);
 
     /**
+     * 删除表单数据数
+     * @param formId:表单ID
+     * @return Optional<Integer>
+     */
+    Optional<Integer> deleteFormNumber(String formId);
+
+    /**
      * 系统验证表单名是否已被使用(也用来查找表单对应ID)
      * @param formName：表单名
      * @return Form

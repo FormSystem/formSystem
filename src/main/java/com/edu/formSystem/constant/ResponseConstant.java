@@ -30,6 +30,12 @@ public class ResponseConstant {
     public static final String FORM_STRUCTURE_UPDATE_FAILURE = "更新表结构失败！请重新添加！";
     public static final String FORM_STRUCTURE_DELETE_SUCCESS = "删除表结构成功！";
     public static final String FORM_STRUCTURE_DELETE_FAILURE = "删除表结构失败！请确认表单结构ID！";
+    public static final String FORM_NUMBER_CREATE_SUCCESS = "添加表数据成功！";
+    public static final String FORM_NUMBER_CREATE_FAILURE = "添加表数据失败！请重新添加！";
+    public static final String FORM_NUMBER_DELETE_SUCCESS = "删除表数据成功！";
+    public static final String FORM_NUMBER_DELETE_FAILURE = "删除表数据失败！请重新删除！";
+    public static final String FORM_NUMBER_UPDATE_SUCCESS = "更新表单数据成功！";
+    public static final String FORM_NUMBER_UPDATE_FAILURE = "更新表单数据失败！请重新更新！";
     public static final String FORM_FIND_FAILURE = "不存在这个表！";
 
     /**
