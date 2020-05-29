@@ -216,6 +216,7 @@
               					</span>
 				              	查看数据
 				           </h3>
+				           <button type="button" style="float:right" onclick=output(this) class="btn btn-gradient-warning btn-rounded btn-fw">Excel导出表格</button>
 						</div>
 						<div class="col-lg-12 grid-margin stretch-card">
 							<div class="card">
@@ -286,7 +287,7 @@
 						for(var k=0;k<data.formStructureList.length;k++){
 							trHtml = trHtml + "<th>"+data.formStructureList[k].formFieldName+"</th>";
 						}
-						trHtml = trHtml + "<th style=\"width: 33%;\">操作</th></tr></thead>";
+						//trHtml = trHtml + "<th style=\"width: 33%;\">操作</th></tr></thead>";
 						$("#addHtml").append(trHtml);
 					}
 				});
@@ -303,13 +304,36 @@
 					if(status == "success") {
 						var typeHtml = "<tbody><tr>";
 						for(var k=0;k<data.length;k++){
-							typeHtml = typeHtml + "<td>"+data[k].formId+"</td><td>"+data[k].formName+"</td><td>"+data[k].formUserId+"</td><td>"+data[k].formTime+"</td><td>"+data[k].formNumber+"</td><td>"+data[k].formWidth+"</td><td>"+data[k].formAlignment+"</td><td><a href=\"getFormNumber.html\"><button type=\"button\" class=\"btn btn-gradient-danger btn-rounded btn-fw\">查看数据</button></a><button type=\"button\" class=\"btn btn-gradient-warning btn-rounded btn-fw\">删除</button></td>";
+							var content = data[k].formNumberContent.split("*");
+							typeHtml = typeHtml + "<tr>";
+							for(var i=0;i<content.length;i++){
+								typeHtml = typeHtml + "<td>"+content[i]+"</td>";
+							}
+							typeHtml = typeHtml + "</tr>";
 						}
-						typeHtml = typeHtml + "</tr></tbody>";
+						typeHtml = typeHtml + "</tbody>";
 						$("#addHtml").append(typeHtml);			
 					}
 				});
 			});
+
+			output = function(obj) {
+				$.ajax({
+					type: "Post",
+					url: 'http://localhost:8080/form/number/excel',
+					async: false,
+					cache: false,
+					data: formId,
+					contentType: false,
+					processData: false,
+				}).always(function(data, status, xhr) {
+					if(status == "success") {
+						alert("Excel导出成功！！")
+					}else{
+						alert("Excel导出失败！！")
+					}
+				});
+			}
 		</script>
 		<script src="../vendors/js/vendor.bundle.base.js"></script>
 		<script src="../vendors/js/vendor.bundle.addons.js"></script>

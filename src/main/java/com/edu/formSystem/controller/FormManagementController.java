@@ -166,4 +166,13 @@ public class FormManagementController {
     public ResponseEntity<?> findFormFieldAttributesByFormFieldId(int formFieldId) {
         return ResponseEntity.ok(formManagementService.findFormFieldAttributesByFormFieldId(formFieldId));
     }
+
+    @ApiOperation(value = "通过表单名查询表单信息", notes = "find form field")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "formName", value = "表单名", dataType = "string", paramType = "query", required = true),
+    })
+    @PostMapping("/form/find/formName")
+    public ResponseEntity<?> isFormNameUsed(String formName) {
+        return ResponseEntity.ok(formManagementService.isFormNameUsed(formName));
+    }
 }

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +44,7 @@ public class FormNumberController {
             @ApiImplicitParam(name = "formNumberContent", value = "数据内容", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "userId", value = "填表人", dataType = "string", paramType = "query")
     })
-    @GetMapping("/form/number/add")
+    @PostMapping("/form/number/add")
     public ResponseEntity<?> insertFormNumber(String formId, String formNumberContent, String userId) {
         Optional<Form> form = formManagementService.findForm(formId);
         if (!form.isPresent()) {
@@ -119,6 +120,18 @@ public class FormNumberController {
             return ResponseEntity.ok("表单数据不存在！请重新输入！");
         }
         return ResponseEntity.ok(formNumber);
+    }
+
+    @ApiOperation(value = "excel导出", notes = "excel output")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "formId", value = "表单ID", dataType = "string", paramType = "query", required = true)
+    })
+    @PostMapping("/form/number/excel")
+    public ResponseEntity<?> outputFormNumberList(String formId) throws IOException {
+         if(formNumberService.outputFormNumberList(formId)){
+             return ResponseEntity.ok("Excel导出成功");
+         }
+        return ResponseEntity.ok("Excel导出失败");
     }
 
 }

@@ -40,7 +40,7 @@ public class LoginRegisterController {
             @ApiImplicitParam(name = "password", value = "密码", dataType = "string", paramType = "query", required = true),
             @ApiImplicitParam(name = "email", value = "邮箱", dataType = "string", paramType = "query", required = true)
     })
-    @PostMapping("/user/register")
+    @GetMapping("/user/register")
     public ResponseEntity<?> register(String name, String password, String email) {
         // 验证账号名是否已经被占用
         Optional<String> userId = loginRegisterService.isNameUsed(name);
@@ -68,7 +68,7 @@ public class LoginRegisterController {
         HashMap<String, Object> results = new HashMap<>();
         results.put("token", jwt);
         results.put("id", id);
-        // TODO: 2018/10/27 添加JWT到Redis
+        results.put("name",name);
         results.put("message", ResponseConstant.ASSERT_LOGIN_SUCCESS);
 
         //登陆成功

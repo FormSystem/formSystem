@@ -223,22 +223,43 @@
 								<div class="card">
 									<div class="card-body">
 										<h4 style="font-size:20px" class="card-title">填写表单基本信息</h4>
-										<form class="forms-sample">
+										<form class="forms-sample" id="form">
 											<div class="form-group">
 												<label style="font-size:15px" for="exampleInputName">表单名称</label>
-												<input type="text" class="form-control" id="inputName" placeholder="FormName">
+												<input type="text" class="form-control" id="formName" name="formName" placeholder="FormName">
 											</div>
 											<div class="form-group">
 												<label style="font-size:15px" for="exampleInputEmail3">表单宽度</label>
-												<input type="text" class="form-control" id="inputNumber" placeholder="Width">
+												<input type="text" class="form-control" id="formWidth" name="formWidth" placeholder="Width">
 											</div>
-											<div class="form-group">
-												<label style="font-size:15px" for="exampleInputPassword4">表单排列方式</label><br>
-												<button type="button" class="btn btn-outline-info btn-fw">左对齐</button>
-												<button type="button" class="btn btn-outline-info btn-fw">右对齐</button>
-												<button type="button" class="btn btn-outline-info btn-fw">顶部对齐</button>
-											</div>
-											<button type="submit" class="btn btn-gradient-primary mr-2">下一步</button>
+											<div class="form-group row">
+					                          <label class="col-sm-1 col-form-label">表单排列方式</label>
+					                          <div class="col-sm-2">
+					                            <div class="form-check">
+					                              <label class="form-check-label">
+					                                <input type="radio" class="form-check-input" name="formAlignment" id="membershipRadios1" value="左对齐" checked>
+					                                左对齐
+					                              </label>
+					                            </div>
+					                          </div>
+					                          <div class="col-sm-2">
+					                            <div class="form-check">
+					                              <label class="form-check-label">
+					                                <input type="radio" class="form-check-input" name="formAlignment" id="membershipRadios1" value="右对齐" >
+					                                右对齐
+					                              </label>
+					                            </div>
+					                          </div>
+					                          <div class="col-sm-4">
+					                            <div class="form-check">
+					                              <label class="form-check-label">
+					                                <input type="radio" class="form-check-input" name="formAlignment" id="membershipRadios2" value="顶部对齐	">
+					                                顶部对齐
+					                              </label>
+					                            </div>
+					                          </div>
+					                        </div>
+											<button type="submit" class="btn btn-gradient-primary mr-2" onclick="createForm()">下一步</button>
 											<button class="btn btn-light">取消</button>
 										</form>
 									</div>
@@ -262,8 +283,31 @@
 			<!-- page-body-wrapper ends -->
 		</div>
 		<script src="../js/common.js"></script>
-
-
+		<script type="text/javascript">
+			createForm = function(obj) {
+				var form = new FormData(document.getElementById("form"));
+				form.append("founder", sessionStorage.getItem("name"));
+				sessionStorage.setItem("formName", document.getElementById("formName").value);
+				$.ajax({
+					type: "Post",
+					url: 'http://localhost:8080/form/register',
+					data: form,
+					async: false,
+					cache: false,
+					contentType: false,
+					processData: false,
+				}).always(function(data, status, xhr) {
+					if(status == "success") {
+						window.event.returnValue=false;
+						window.location.href = "addFormStructure.html";
+						//alink();
+					} else {
+						alert("创建表单错误！	");
+					}
+				})
+				
+			}
+		</script>
 		<script src="../vendors/js/vendor.bundle.base.js"></script>
 		<script src="../vendors/js/vendor.bundle.addons.js"></script>
 		<!-- endinject -->

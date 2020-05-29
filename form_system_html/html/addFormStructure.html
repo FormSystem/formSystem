@@ -216,6 +216,7 @@
 		      					</span>
 				              	创建表单结构
 					        </h3>
+					        <button type="button" style="float:right" class="btn btn-gradient-warning btn-rounded btn-fw">完成创建</button>
 						</div>
 						<div class="row">
 							<div class="col-2 grid-margin stretch-card">
@@ -297,10 +298,10 @@
 					case "单行文本": centerHtml = centerHtml + "<div class=\"form-group\"><label for=\"exampleInputName\">单行文本</label><input type=\"text\" class=\"form-control\" id=\"inputName\"></div>"; break;
 					case "多行文本": centerHtml = centerHtml + "<div class=\"form-group\"><label for=\"exampleInputName\">多行文本</label><textarea class=\"form-control\" id=\"exampleTextarea1\" rows=\"5\"></textarea></div>"; break;
 					case "单选框组": centerHtml = centerHtml + "<div class=\"form-group\"><label for=\"exampleInputName\">单选框组</label><div class=\"form-check\"><label class=\"form-check-label\"><input type=\"radio\" class=\"form-check-input\" name=\"optionsRadios\" id=\"optionsRadios1\"> option1<i class=\"input-helper\"></i></label></div><div class=\"form-check\"> <label class=\"form-check-label\"><input type=\"radio\" class=\"form-check-input\" name=\"optionsRadios\" id=\"optionsRadios1\"> option2<i class=\"input-helper\"></i></label></div><div class=\"form-check\"> <label class=\"form-check-label\"><input type=\"radio\" class=\"form-check-input\" name=\"optionsRadios\" id=\"optionsRadios1\"> option3<i class=\"input-helper\"></i></label></div></div>"; break;
-					case "多选框组": centerHtml = centerHtml +"<div class=\"form-group\"><label for=\"exampleInputName\">多选框组</label><div class=\"form-check\"><label class=\"form-check-label\"><input type=\"checkbox\" class=\"form-check-input\"> Default<i class=\"input-helper\"></i></label></div><div class=\"form-check\"><label class=\"form-check-label\"><input type=\"checkbox\" class=\"form-check-input\" checked>Checked<i class=\"input-helper\"></i></label></div></div>"; break;
-					// case "日期选择器": centerHtml = centerHtml +; break;
-					// case "时间选择器": centerHtml = centerHtml +; break;
-					// case "下拉选择框": centerHtml = centerHtml +; break;
+					case "多选框组": centerHtml = centerHtml +"<div class=\"form-group\"><label for=\"exampleInputName\">多选框组</label><div class=\"form-check\"><label class=\"form-check-label\"><input type=\"checkbox\" class=\"form-check-input\"> 多选项1<i class=\"input-helper\"></i></label></div><div class=\"form-check\"><label class=\"form-check-label\"><input type=\"checkbox\" class=\"form-check-input\" checked>多选项2<i class=\"input-helper\"></i></label></div></div>"; break;
+					 case "日期选择器": centerHtml = centerHtml + "<div class=\"form-group\"><label for=\"exampleInputName\">日期选择器</label><input type=\"date\" class=\"form-control\" id=\"inputName\"></div>"; break;
+					 case "时间选择器": centerHtml = centerHtml + "<div class=\"form-group\"><label for=\"exampleInputName\">时间选择器</label><input type=\"time\" class=\"form-control\" id=\"inputName\"></div>"; break;
+					 case "下拉选择框": centerHtml = centerHtml + "<div class=\"form-group\"><label for=\"exampleSelectGender\">下拉选择框</label><select class=\"form-control\" id=\"exampleSelectGender\"><option>选项一</option><option>选项二</option></select></div>"; break;
 					// case "计数器": centerHtml = centerHtml +; break;
 					// case "评分": centerHtml = centerHtml +; break;
 					// case "开关": centerHtml = centerHtml +; break;
@@ -332,9 +333,10 @@
 								rightHtml = rightHtml + "<label for=\"exampleInputName\">"+data[k]+"<div class=\"form-check form-check-primary\"><label class=\"form-check-label\"><input type=\"checkbox\" class=\"form-check-input\" checked=\"\">必填<i class=\"input-helper\"></i></label></div>";
 
 							}else{
-								rightHtml = rightHtml +"<div class=\"form-group\">"+ "<label for=\"exampleInputName\">"+data[k]+"</label><input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Name\">"+ "</div>";
+								rightHtml = rightHtml +"<div class=\"form-group\">"+ "<label for=\"exampleInputName\">"+data[k]+"</label><input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\""+data[k]+"\">"+ "</div>";
 							}
 						}
+						rightHtml = rightHtml + "<button type=\"button\" id=\"确定\" onclick=\"addFormStructure(this)\" class=\"btn btn-gradient-success btn-fw\">确定</button>";
 						$("#rightInsert").empty();
 						$("#rightInsert").append(rightHtml);				
 					}

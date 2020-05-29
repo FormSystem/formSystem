@@ -77,9 +77,8 @@
             //todo:验证两次密码输入是否相同
           }else{
             var registerForm = new FormData(document.getElementById("registerForm"));
-            alert(registerForm.name);
             $.ajax({
-              type: "Post",
+              type: "Get",
               url: 'http://localhost:8080/user/register',
               data: $('#registerForm').serialize(),
               async: false,
@@ -87,7 +86,7 @@
               contentType: false,
               processData: false,
             }).always(function(data, status, xhr) {
-              if(status == "success") {
+              if(status == "success") { 
                 alert("注册成功！");
                 window.location.href = "login.html";
                 alink();

@@ -138,7 +138,6 @@
 			<!-- partial -->
 			<div class="container-fluid page-body-wrapper">
 				<!-- 菜单 -->
-				<!-- 菜单 -->
 				<nav class="sidebar sidebar-offcanvas" id="sidebar">
 					<ul class="nav">
 						<li class="nav-item nav-profile">
@@ -280,7 +279,7 @@
 					if(status == "success") {
 						var typeHtml = "<tbody>";
 						for(var k=0;k<data.length;k++){
-							typeHtml = typeHtml + "<tr><td>"+data[k].formId+"</td><td>"+data[k].formName+"</td><td>"+data[k].formUserId+"</td><td>"+data[k].formTime+"</td><td>"+data[k].formNumber+"</td><td>"+data[k].formWidth+"</td><td>"+data[k].formAlignment+"</td><td><a href=\"getFormNumber.html\"><button type=\"button\" id=\""+ data[k].formId+ "\" onclick=\"addFormId(this)\" class=\"btn btn-gradient-danger btn-rounded btn-fw\">查看数据</button></a><button type=\"button\" class=\"btn btn-gradient-warning btn-rounded btn-fw\">删除</button></td></tr>";
+							typeHtml = typeHtml + "<tr><td>"+data[k].formId+"</td><td>"+data[k].formName+"</td><td>"+data[k].formUserId+"</td><td>"+data[k].formTime+"</td><td>"+data[k].formNumber+"</td><td>"+data[k].formWidth+"</td><td>"+data[k].formAlignment+"</td><td><a href=\"getFormNumber.html\"><button type=\"button\" id=\""+ data[k].formId+ "\" onclick=\"addFormId(this)\" class=\"btn btn-gradient-danger btn-fw\">查看数据</button></a><a href=\"addFormNumber.html\"><button type=\"button\" id=\""+ data[k].formId+ "\" onclick=\"addFormId(this)\" class=\"btn btn-gradient-success btn-fw\">添加数据</button></a><button type=\"button\"  id=\""+ data[k].formId+ "\" onclick=\"deleteForm(this)\" class=\"btn btn-gradient-warning btn-fw\">删除</button></td></tr>";
 						}
 						typeHtml = typeHtml + "</tbody>";
 						$("#addHtml").append(typeHtml);						
@@ -290,6 +289,10 @@
 
 			addFormId = function(obj) {
 				sessionStorage.setItem("formId", obj.id);
+			}
+			addFormId = function(obj) {
+				sessionStorage.setItem("formId", obj.id);
+				
 			}
 		</script>
 		<script src="../vendors/js/vendor.bundle.base.js"></script>

@@ -2,6 +2,7 @@ package com.edu.formSystem.service;
 
 import com.edu.formSystem.model.domain.FormNumber;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,6 +54,13 @@ public interface FormNumberService {
      * @return
      */
     Optional<List<FormNumber>> findAllFormNumber(String formId);
+
+    /**
+     * excel导出表单
+     * @param formId 表单id
+     * @return
+     */
+    boolean outputFormNumberList(String formId) throws IOException;
 
 
 

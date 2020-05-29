@@ -8,12 +8,12 @@
 		<title>贝塔考试管理系统</title>
 		<!-- plugins:css -->
 		<link rel="stylesheet" href="../vendors/iconfonts/mdi/css/materialdesignicons.min.css">
-		<link rel="stylesheet" href="..vendors/css/vendor.bundle.base.css">
 		<!-- endinject -->
 		<!-- inject:css -->
 		<link rel="stylesheet" href="../css/style.css">
 		<!-- endinject -->
 		<link rel="shortcut icon" href="../images/favicon.png" />
+		<script src="../js/jquery.js"></script>
 	</head>
 
 	<body>
@@ -213,7 +213,7 @@
 		      					<span class="page-title-icon bg-gradient-primary text-white mr-2">
 		        					<i class="mdi mdi-account-multiple"></i>                 
 		      					</span>
-				              	添加管理员
+				              	添加表单数据
 					        </h3>
 						</div>
 						<div class="row">
@@ -221,29 +221,17 @@
 								<div class="card">
 									<div class="card-body">
 										<form class="forms-sample">
-											<div class="form-group">
+											<div id="addHtml"></div>
+											<!-- <div class="form-group">
 												<label for="exampleInputName">用户名</label>
 												<input type="text" class="form-control" id="inputName" placeholder="Username">
 											</div>
 											<div class="form-group">
 												<label for="exampleInputEmail3">密码</label>
 												<input type="text" class="form-control" id="inputNumber" placeholder="password">
-											</div>
-											<div class="form-group">
-												<label for="exampleInputPassword4">用户组ID</label>
-												<select class="form-control" id="userGroup">
-													<option>2-报名审核人员</option>
-													<option>3-考场管理人员</option>
-													<option>4-成绩录入人员</option>
-													<option>5-门户网站管理员</option>
-												</select>
-											</div>
-											<div class="form-group">
-												<label for="exampleSelectGender">邮箱</label>
-												<input type="email" class="form-control" id="inputCloseTime" placeholder="Email">
-											</div>
-											<button type="submit" class="btn btn-gradient-primary mr-2">提交</button>
-											<button class="btn btn-light">取消</button>
+											</div> -->
+											<button type="submit" class="btn btn-gradient-primary mr-2" onclick="addFormNumber()">提交</button>
+											<button class="btn btn-light" onclick="cancel()">取消</button>
 										</form>
 									</div>
 								</div>
@@ -265,7 +253,71 @@
 			</div>
 			<!-- page-body-wrapper ends -->
 		</div>
+		<script src="../js/common.js"></script>
+		<script type="text/javascript">
+			var formId = new FormData();
+	        formId.append("formId", sessionStorage.getItem("formId"));
+	        var formStructure = "";
+			$(document).ready(function() {
+				//抽取结构
+				$.ajax({
+					type: "Post",
+					url: 'http://localhost:8080/form/information',
+					async: false,
+					cache: false,
+					data: formId,
+					contentType: false,
+					processData: false,
+				}).always(function(data, status, xhr) {
+					if(status == "success") {
+						var trHtml = " ";
+						for(var k=0;k<data.formStructureList.length;k++){
+							formStructure =  formStructure + " " + data.formStructureList[k].formFieldName;
+							trHtml = trHtml +"<div class=\"form-group\">" + "<label for=\"exampleInputName\">"+data.formStructureList[k].formFieldName+"</label><input type=\"text\" class=\"form-control\" id=\""+data.formStructureList[k].formFieldName+"\" ></div>";
+						}
+						$("#addHtml").append(trHtml);
+					}
+				});
+			});
+			cancel = function() {
 
+				window.event.returnValue=false;
+				window.location.href = "getForm.html";
+			}
+			addFormNumber = function() {
+				var fieldName = formStructure.split(" ");
+				var content = "";
+				var contentList = content;
+				for(var i=1;i<fieldName.length;i++){
+					if(i!=1){
+						contentList = contentList + "*";
+					}
+					content = document.getElementById(fieldName[i]).value;
+					contentList = contentList + content;
+				}
+				var formNumber = new FormData();
+				formNumber.append("formNumberContent", contentList);
+				formNumber.append("formId", sessionStorage.getItem("formId"));
+				formNumber.append("userId", sessionStorage.getItem("id"));
+
+				$.ajax({
+					type: "Post",
+					url: 'http://localhost:8080/form/number/add',
+					async: false,
+					cache: false,
+					data: formNumber,
+					contentType: false,
+					processData: false,
+				}).always(function(data, status, xhr) {
+					if(status == "success") {
+						alert("添加成功！")
+						//window.event.returnValue=false;
+						//window.location.href = "getForm.html";
+					}
+				});
+			}
+
+		</script>
 		<script src="../vendors/js/vendor.bundle.base.js"></script>
 		<script src="../vendors/js/vendor.bundle.addons.js"></script>
 		<!-- endinject -->
