@@ -31,7 +31,9 @@ import static com.edu.formSystem.constant.ResponseConstant.FORM_NUMBER_DELETE_SU
 @Api(value = "FormNumberController")
 @RestController
 public class FormNumberController {
-
+    /**
+     * 不想打工的第一天
+     */
     @Autowired
     private FormNumberService formNumberService;
 
